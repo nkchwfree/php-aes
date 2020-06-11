@@ -27,16 +27,16 @@ $text = $aes->encrypt("12345678901234567890");
 //echo base64_decode("YWJj");
 
 // //对文件进行压缩+加密
-// $aes->zipfile("./in.txt", "zip.data");
+// $aes->zipfile("./data.txt", "zip.data");
 
 // //对文件进行解密+解压
-// $aes->unzipfile("./zip.data", "out.txt");
+// $aes->unzipfile("./zip.data", "data-2.txt");
 
 // //对文件进行加密
-$aes->encryptFile("./in.txt", "encrypt.data");
+$aes->encryptFile("./data.txt", "encrypt.data");
 
 // //对文件进行解密
-$aes->decryptFile("./encrypt.data", "out2.txt");
+$aes->decryptFile("./encrypt.data", "data-3.txt");
 
 
 //测试Java加密的内容
