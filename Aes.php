@@ -41,7 +41,7 @@ class Aes {
     public function encryptFile($inFile, $outFile) {
         $fin = fopen($inFile, "rb");
         $fout = fopen($outFile, "wb");
-        $size = 1024*1024/16-1;
+        $size = 1024*1024-1;
 
         if ($fin !== FALSE && $fout!==FALSE) {
             while(($con !== FALSE) && !feof($fin)) {
@@ -67,7 +67,7 @@ class Aes {
         $fout = fopen($outFile, "wb");
 
         //每次处理1M
-        $size = 1024*1024/16;
+        $size = 1024*1024;
 
         if ($fin !== FALSE && $fout!==FALSE) {
             while(($con !== FALSE) && !feof($fin)) {
@@ -149,21 +149,41 @@ $key = "12345678abcdefgh";
 
 $aes = new Aes($key, $iv);
 
-//对字符串进行加密
-$text = $aes->encrypt("abcd1234");
-//echo $text;
-//对字符串进行解密
-echo $aes->decrypt($text);
+// //对字符串进行加密
+// $text = $aes->encrypt("1234567890abcdef");
+// echo bin2hex($text)."\n";
 
-//对文件进行压缩+加密
-$aes->zipfile("./in.txt", "zip.data");
+// echo bin2hex($aes->encrypt("1234567890abcdef1"))."\n";
+// echo bin2hex($aes->encrypt("1234567890abcdef1234567890abcdef"))."\n";
+// //对字符串进行解密
+// echo $aes->decrypt($text);
+//
+$text = $aes->encrypt("12345678901234567890");
+//echo base64_encode($text)."\n";
 
-//对文件进行解密+解压
-$aes->unzipfile("./zip.data", "out.txt");
+//"RGJ04WXGpbwHels9711PLiUgjTXGN8wODGPXlSXddvQ="
+//echo $aes->decrypt(base64_decode("IlnmB2UzD84R5Mx4A+BPUMjHFGWxsDlAhrzuzC6nY/M="));
 
-//对文件进行加密
+//echo base64_decode("YWJj");
+
+// //对文件进行压缩+加密
+// $aes->zipfile("./in.txt", "zip.data");
+
+// //对文件进行解密+解压
+// $aes->unzipfile("./zip.data", "out.txt");
+
+// //对文件进行加密
 $aes->encryptFile("./in.txt", "encrypt.data");
 
-//对文件进行解密
+// //对文件进行解密
 $aes->decryptFile("./encrypt.data", "out2.txt");
+
+//测试Java加密的内容
+$text = file_get_contents("/Users/changwei/code/java/1.dat");
+//echo $text;
+echo $aes->decrypt($text);
+
+//解压Java加密的文件
+$aes->decryptFile("/Users/changwei/code/java/2.dat", "java-out2.txt");
+
 
